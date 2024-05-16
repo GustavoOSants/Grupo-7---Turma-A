@@ -7,7 +7,7 @@ public class rpg {
     }
     public static void menuJogo(){
     Scanner input = new Scanner(System.in);
-    String opcao;
+    int opcao;
 
     do{ 
       System.out.println("Menu");
@@ -16,26 +16,26 @@ public class rpg {
       System.out.println("3 - Créditos");
       System.out.println("4 - Sair");
       System.out.println("Escolha uma opção: ");
-      opcao = input.next();
+      opcao = input.nextInt();
 
       switch (opcao){
-        case "1":
+        case 1:
           mostrarInstrucoes();
           break;
-        case "2":
+        case 2:
           jogar();
           break;
-        case "3":
+        case 3:
           mostrarCreditos();
           break;
-        case "4":
+        case 4:
           System.out.println("Saindo do jogo...");
           break;
         default:
           System.out.println("Opção inválida. Tente novamente.");
             
       }
-         }while (opcao != "4");
+         }while (opcao != 4);
   }
   public static void mostrarInstrucoes(){
     System.out.println("Instruções do jogo:");
