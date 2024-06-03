@@ -46,6 +46,44 @@ public class rpg {
   public static void mostrarCreditos(){
     System.out.println("Desenvolvido por: (nome dos integrantes)");
   }
+  
+    public static void floresta(int danoDec, int vida_player, String ataque1, String ataque2, String ataque3, String desc1, String desc2, String desc3, String erro1, String erro2) throws InterruptedException{
+      Scanner input = new Scanner(System.in);
+      String f;
+          sout("Após dias percorrendo o caminho para caverna,  se deparada com seu primeiro desafio: A floresta esmeralda.\n");
+          sout("O sol estava se pondo, lançando uma luz dourada sobre as árvores majestosas que se erguiam diante dele. \nAo tentar entrar, sentiu uma pressão invisível, como se uma barreira mágica o impedisse de continuar. \nEra como bater contra uma parede de ar sólido.\n");
+          sout("De repente, uma figura colossal surgiu diante dele. Era Grom, , com pele de rocha e olhos verdes brilhantes como esmeraldas. Sua voz ecoou como um trovão:\n");
+          sout("\"Para entrar na Floresta de Esmeralda, deve provar sua força e determinação. Eu sou Grom,  o guardião da floresta. Mostre-me que é digno!\"\n\n");
+        // Desafio 1 e 2 de logica, zoio da commit e dps apaga aqui.
+          sout("Impressionado pela habilidade e coragem, Grom abaixou sua cabeça em respeito. \"Você provou ser digno. Pode passar.\"\n\n");
+          sout("A partir daquele momento, passou a se questionar sobre o que mais enfrentaria...\n");
+          do {
+            sout("O que você vai fazer? \n1 - Continuar pela floresta\n");
+            f = input.next();
+            if(!f.equals("1")){
+              sout("Você fica parado esperando algo acontecer\n");
+            }
+          }while(!f.equals("1"));
+          sout("Ao adentrar sobre a floresta, o cenário foi mudando, o ar estava pesado e úmido, com um cheiro terroso e de decomposição que se entranhava nas narinas. \nO silêncio era quase total, interrompido apenas pelo ocasional farfalhar das folhas ou pelo som distante de um animal desconhecido. \nUma névoa rasteira envolvia o chão da floresta, uma camada fina e misteriosa que tornava difícil ver onde se pisava. \nA cada passo, tinha a sensação de estar sendo observado, olhos invisíveis seguindo seus movimentos.\n");
+          sout("Prosseguindo pela trilha, depois de alguns minutos de caminhada, chega ao coração da floresta. \nO coração é um refúgio de mistério e escuridão, onde árvores imponentes e densas barreiras desafiam a luz solar. \nNo centro, uma clareira pequena revela feixes fracos de luz, criando uma atmosfera de encanto sombrio, onde a natureza exala uma aura de mistério e intriga. \nEste é um lugar de beleza selvagem e perigo latente, onde corajosos se aventuram em busca de segredos antigos.\n");
+          sout("No centro deste círculo, encontra uma criatura imponente: um gorila de pelagem espessa e dentes afiados, grunhindo em desafio e batendo no peito com suas enormes mãos. \nSeus olhos brilham com uma mistura de fúria e inteligência, indicando sua supremacia na selva.\n");
+          comb3(danoDec, vida_player, ataque1, ataque2, ataque3, desc1, desc2, desc3, erro1, erro2);
+          sout("Com a vitória, uma onda de energia percorre seu corpo, elevando-o de nível e fortalecendo suas habilidades.");
+          sout("Finalmente, após superar todos os desafios, percebesse um baú escondido.");
+          do {
+            sout("1 - Abrir o bau");
+            f = input.next();
+            if (!f.equals("1")) {
+              sout("Você fica parado esperando algo acontecer\n");
+            }
+          }while(!f.equals("1"));
+          sout("Você abre-o com cautela, revelando seu precioso conteúdo: um fragmento de uma espada antiga, cujo brilho é tão intenso que parece desafiar a escuridão ao seu redor.\n");
+          sout("Este fragmento de espada não é apenas uma recompensa material, mas também um símbolo do seu poder e da sua coragem.\n");
+          sout("Aquele fragmento trouxe memorias de seu pai, um respeitado guerreiro, ensinava-lhe desde cedo a arte da espada e do escudo. \nVocês treinavam juntos nas clareiras perto do vilarejo, onde, além de técnicas de combate, o pai transmitia valores como coragem, determinação e honra.\n");
+          sout("Com ele em mãos, você se prepara para continuar sua jornada, sabendo que cada desafio enfrentado o tornará mais forte e mais determinado em sua busca pelo triunfo final.\n");
+          sout("Pressione qualquer tecla para continuar\n");
+          f = input.next();
+        }
 
   public static void comb3(int danoDec, int vida_player, String ataque1, String ataque2, String ataque3, String desc1, String desc2, String desc3, String erro1, String erro2) throws InterruptedException{
     int i = 0, dado_inimigo, dano, decisao;
@@ -195,6 +233,47 @@ public class rpg {
       dano = (int) (Math.random() * 8) + 3 + 4;
     }
     return dano;
+  }
+  
+  public static int ataque_3(int danoDec) {
+    int dano;
+    if (danoDec == 1) {
+      dano = (int) (Math.random() * 10) + 1;
+    } else {
+      dano = (int) (Math.random() * 15) + 1;
+    }
+    return dano;
+  }
+  public static int cabeca (int defesa_player, int dado_inimigo) throws InterruptedException {
+    int dano = 0;
+    if (dado_inimigo >= defesa_player) {
+      dano = (int) (Math.random() * 12) + 1;
+      sout("Então, ele avança com um rugido ensurdecedor, sua cabeça se lançando em sua direção com uma força tremenda.\n");
+      sout("Tirando " + dano + " de dano\n\n");
+    } else if (defesa_player > dado_inimigo) {
+      sout("O gorila avança com sua cabeça baixa, mas você consegue recuar a tempo, escapando do caminho do ataque.\n" +
+              "Sua cabeça passa zumbindo pelo ar, falhando em seu intento de acertá-lo.\n\n");
+    }
+    return dano;
+  }
+  
+  public static void pantano() throws InterruptedException {
+      sout("Você superou seu primeiro obstáculo, conquistando o primeiro pedaço da espada, e agora enfrentará: o pântano.\n");
+      sout("Após alguns dias de jornada, você finalmente avista a entrada do pântano. A vegetação densa e a neblina  tornam o ambiente sombrio e desolador. \nAo adentrar, afundando na lama úmida que suga seus pés a cada passo. O ar é espesso, impregnado com o cheiro de decomposição e o eco de ruídos estranhos que ecoam entre as árvores retorcidas, e se questiona se algum ser vivo poderia habitar aquele lugar. \nAs lendas contam que todos aqueles que tentaram atravessar o pântano enlouqueceram ou desapareceram.\n");
+      //Desafio 3,4,5 aqui Zoio, da commit e dps apaga aqui
+    sout("À medida que avança, nota-se  uma luz fraca brilhando entre a densa vegetação à sua frente. Você se aproxima com cuidado, quando emerge em uma clareira, se depara com o mago corrompido:\n");
+    sout("Mordekai ergue a cabeça lentamente, seus olhos ardendo com uma intensidade que parece perfurar a sua alma, seu manto escuro se mistura com as sombras do pântano, e ele parece uma extensão sinistra do ambiente ao seu redor. \nUm sorriso estranho se forma em seus lábios enquanto ele anda em sua direção com uma voz que ecoa como o sussurro de sombras.\n");
+    sout("\"Ah, mais um intruso ousado se aventurando em meus domínios\", diz Mordekai, sua voz carregada com um tom de desdém. \"Você não teme o perigo que espreita neste lugar sombrio?\"\n");
+    sout("Seus dedos cerram-se em torno do fragmento corrompido da espada, e a luz sinistra que emana dela parece pulsar em resposta à sua presença.\n");
+    sout("\"Sou Mordekai, o mago deste pantano amaldiçoado\", continua ele, sua voz ecoando entre as árvores como um eco distorcido. \"\nE quem ousa desafiar minha autoridade deve estar disposto a pagar o preço com sangue e alma.\"\n");
+    sout("Seus olhos brilham com uma malícia sombria enquanto ele te avalia, como se buscasse penetrar em sua mente e descobrir suas fraquezas mais profundas.\n");
+    sout("\"E você, guerreiro, o que o traz a este lugar condenado? Busca riquezas? Glória? Ou talvez esteja apenas buscando a morte nas garras da escuridão?\"");
+    sout("O combate precisa ainda não está finalizado!\n");
+    sout("Com a morte de Mordekai, sua forma física se desintegra lentamente, e sua alma, finalmente libertada da corrupção, se dissipa em um brilho etéreo. \nVocê foi protegido da loucura pelo primeiro fragmento da espada que conquistou na floresta, e toma posse do fragmento corrompido de Mordekai. Sem o poder protetor desse primeiro fragmento, não teria conseguido vencer o mago. \n");
+    sout("Ao juntar os fragmentos, a espada se reconstruiu magicamente em suas mãos, emanando uma luz intensa. \nNesse momento, a espada revelou uma visão do passado: a batalha final entre seu pai e o dragão Astaroth. Viu seu pai lutando bravamente, usando a espada com destreza e coragem. \nNo momento decisivo, seu pai cravou a espada no coração do dragão, sacrificando-se para garantir a vitória.\n");
+    sout("A visão mostrou que o sacrifício de seu pai não foi em vão. Astaroth foi derrotado.\n");
+    sout("Com a espada em mãos, você está preparado para enfrentar qualquer ameaça e proteger seu vilarejo.\n");
+
   }
 
     }
