@@ -1,52 +1,108 @@
+import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class rpg {
-    
     public static void main(String[] args) throws Exception {
            menuJogo();
     }
-    public static void menuJogo(){
+    public static void menuJogo() throws InterruptedException {
     Scanner input = new Scanner(System.in);
-    int opcao;
-
+    String opcao;
     do{ 
-      System.out.println("Menu");
-      System.out.println("1 - Instruções");
-      System.out.println("2 - Jogar");
-      System.out.println("3 - Créditos");
-      System.out.println("4 - Sair");
-      System.out.println("Escolha uma opção: ");
-      opcao = input.nextInt();
-
+      sout("Menu\n" +
+              "1 - Instruções\n" +
+              "2 - Jogar\n" +
+              "3 - Créditos\n" +
+              "4 - Sair\n" +
+              "Escolha uma opção: \n");
+      opcao = input.next();
       switch (opcao){
-        case 1:
+        case "1":
           mostrarInstrucoes();
           break;
-        case 2:
+        case "2":
           jogar();
           break;
-        case 3:
+        case "3":
           mostrarCreditos();
           break;
-        case 4:
-          System.out.println("Saindo do jogo...");
+        case "4":
+          sout("Saindo do jogo...");
           break;
         default:
-          System.out.println("Opção inválida. Tente novamente.");
-            
+          sout("Opção inválida. Tente novamente.\n");
       }
-         }while (opcao != 4);
+         }while (!opcao.equals("4"));
   }
-  public static void mostrarInstrucoes(){
-    System.out.println("Instruções do jogo:");
+  public static void mostrarInstrucoes()throws InterruptedException{
+    Scanner input = new Scanner(System.in);
+    sout("Instruções do jogo: \n" +
+            "Heart of the dragon é um jogo que se baseira em dados para que ação aconteça como um rpg de mesa.\n" +
+            "Durente os combates os seus acertos e danos irão se basear neles\n" +
+            "Existem ataques que não necessitam de uma rolagem de acerto, mas elas só podem ser usadas uma vez, então as use com sabedoria\n");
+    sout("Digite qualquer tecla para retornar ao menu.\n");
+    String j = input.next();
   }
-  public static void jogar(){
-    System.out.println("Iniciando o jogo...");
+  public static void jogar()throws InterruptedException{
+      Scanner input = new Scanner(System.in);
+      int vida_player = 25, danoDec = 0;
+      String ataque1 = null, desc1 = null ,ataque2 = null,desc2=null,ataque3=null,desc3=null, erro1=null, erro2=null, escolha;
+      do {
+        sout("Antes de começarmos, Você precisa decidir arma você ira usar em combate\n" +
+                "1 - Espada\n" +
+                "2 - Machado Grande\n" +
+                "A sua escolha afetará diretamente o seu estilo de jogo\n");
+        escolha = input.next();
+        switch (escolha) {
+          case "1":
+            danoDec = 1;
+            ataque1 = "Golpear com a espada";
+            desc1 = "Você avança com sua espada, cortando o ar com um golpe poderoso que se choca contra o inimigo!\n";
+            erro1="Você tenta atingir seu inimigo, mas ele se esquiva no último momento, evitando o golpe.\n\n";
+            ataque2 = "Rajada de veneno";
+            desc2 = "Você lança um frasco de veneno, que se estilhaça sobre o inimigo, cobrindo-o com uma nuvem tóxica que causa danos ao longo do tempo.\n";
+            ataque3 = "Rajada Mistica";
+            desc3 = "Você invoca uma rajada de energia arcano que atinge o inimigo, envolvendo-o em chamas mágicas e causando danos devastadores.\n";
+            break;
+          case "2":
+            danoDec = 2;
+            ataque1 = "Atacar com o machado";
+            desc1 = "Você avança furiosamente com seu machado, desferindo um golpe poderoso que corta o ar e se choca contra o inimigo com força devastadora.\n";
+            erro1 = "Seu golpe não atinge o alvo, seu machado passa rente ao inimigo sem causar dano.\n\n";
+            ataque2 = "Ataque Descuidado";
+            desc2 = "Você se lança de forma imprudente em direção ao inimigo, ignorando sua própria defesa em troca de ataques mais poderosos. Seu golpe desajeitado atinge o alvo com força esmagadora\n";
+            erro2 = "Sua investida desajeitada não alcança o alvo, deixando-o exposto aos contra-ataques inimigos.\n\n";
+            ataque3 = "Espirito animal";
+            desc3 = "Você invoca o espírito de seu animal guia. Um lobo. que surge ao seu lado em uma manifestação etérea de sua fúria. \n" +
+                    "O espírito avança em direção ao inimigo com garras ou presas afiadas, desferindo golpes poderosos\n";
+            break;
+          default:
+            sout("Escolha uma opção valida!");
+        }
+      }while(!escolha.equals("1") && !escolha.equals("2"));
+      sout("Em um reino distante, um jovem herói perde seus pais após um ataque do dragão Astaroth. \nCom a possibilidade de um novo dragão ameaçando seu vilarejo, você parte em uma jornada solitária para salvar seu povo, quebrar a maldição e encontrar sua mãe desaparecida.");
+    floresta(danoDec,vida_player,ataque1,ataque2,ataque3,desc1,desc2,desc3,erro1,erro2);
+    pantano();
   }
-  public static void mostrarCreditos(){
-    System.out.println("Desenvolvido por: (nome dos integrantes)");
+  public static void mostrarCreditos() throws InterruptedException{
+      Scanner input = new Scanner(System.in);
+    sout("Desenvolvido por:\n" +
+            "João Pedro Zabarella Muniz\n" +
+            "Julia Souza Soares\n" +
+            "Maria Beatriz Monteiro Braga\n" +
+            "Gustavo Oliveira dos Santos\n");
+    sout("Digite qualquer tecla para retornar ao menu.\n");
+    String j = input.next();
   }
-  
+
+  public static void sout(String texto) throws InterruptedException {
+    for (char caractere : texto.toCharArray()) {
+      System.out.print(caractere);
+      TimeUnit.MILLISECONDS.sleep(37);
+    }
+  }
+
     public static void floresta(int danoDec, int vida_player, String ataque1, String ataque2, String ataque3, String desc1, String desc2, String desc3, String erro1, String erro2) throws InterruptedException{
       Scanner input = new Scanner(System.in);
       String f;
@@ -234,7 +290,16 @@ public class rpg {
     }
     return dano;
   }
-  
+  public static int ataque_2(int danoDec){
+    int dano;
+    if (danoDec==1){
+      dano = (int) (Math.random() * 12) + 1;
+    } else{
+      dano = (int) (Math.random() * 8) + 1 + 6;
+    }
+    return dano;
+  }
+
   public static int ataque_3(int danoDec) {
     int dano;
     if (danoDec == 1) {
@@ -244,6 +309,20 @@ public class rpg {
     }
     return dano;
   }
+  public static int punho (int defesa_player, int dado_inimigo) throws InterruptedException {
+    int dano = 0;
+    if (dado_inimigo >= defesa_player) {
+      dano = (int) (Math.random() * 6) + 1;
+      sout("O gorila avança com um rugido ensurdecedor, lançando seu punho com força avassaladora em sua direção.\n" +
+              "O soco conecta-se com um impacto tremendo, lançando-o para trás!\n");
+      sout("Tirando " + dano + " de dano\n\n");
+    } else if (defesa_player > dado_inimigo) {
+      sout("O gorila avança com ferocidade, seu punho erguido como um martelo prestes a cair.\n" +
+              "Porém, você consegue se mover habilmente para o lado no último momento, evitando o impacto por uma fração de segundo!\n\n");
+    }
+    return dano;
+  }
+
   public static int cabeca (int defesa_player, int dado_inimigo) throws InterruptedException {
     int dano = 0;
     if (dado_inimigo >= defesa_player) {
@@ -256,7 +335,20 @@ public class rpg {
     }
     return dano;
   }
-  
+  public static int palmas (int defesa_player, int dado_inimigo) throws InterruptedException {
+    int dano = 0;
+    if (dado_inimigo >= defesa_player) {
+      dano = (int) (Math.random() * 8) + 1;
+      sout("Em um piscar de olhos, ele desfere um tapa brutal, o impacto ecoando pelo ar enquanto você sente o arremesso de força, ameaçando desequilibrá-lo.\n" +
+              "Tirando " + dano + " de dano\n\n");
+    } else if (defesa_player > dado_inimigo) {
+      sout("gorila se ergue, suas mãos se movendo como enormes garras em sua direção.\n" +
+              "Você consegue se esquivar habilmente, desviando-se do tapa com agilidade enquanto ele passa ao seu lado!\n\n");
+    }
+    return dano;
+  }
+
+
   public static void pantano() throws InterruptedException {
       sout("Você superou seu primeiro obstáculo, conquistando o primeiro pedaço da espada, e agora enfrentará: o pântano.\n");
       sout("Após alguns dias de jornada, você finalmente avista a entrada do pântano. A vegetação densa e a neblina  tornam o ambiente sombrio e desolador. \nAo adentrar, afundando na lama úmida que suga seus pés a cada passo. O ar é espesso, impregnado com o cheiro de decomposição e o eco de ruídos estranhos que ecoam entre as árvores retorcidas, e se questiona se algum ser vivo poderia habitar aquele lugar. \nAs lendas contam que todos aqueles que tentaram atravessar o pântano enlouqueceram ou desapareceram.\n");
