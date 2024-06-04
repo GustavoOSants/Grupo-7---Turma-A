@@ -110,7 +110,15 @@ public class rpg {
           sout("O sol estava se pondo, lançando uma luz dourada sobre as árvores majestosas que se erguiam diante dele. \nAo tentar entrar, sentiu uma pressão invisível, como se uma barreira mágica o impedisse de continuar. \nEra como bater contra uma parede de ar sólido.\n");
           sout("De repente, uma figura colossal surgiu diante dele. Era Grom, , com pele de rocha e olhos verdes brilhantes como esmeraldas. Sua voz ecoou como um trovão:\n");
           sout("\"Para entrar na Floresta de Esmeralda, deve provar sua força e determinação. Eu sou Grom,  o guardião da floresta. Mostre-me que é digno!\"\n\n");
-        // Desafio 1 e 2 de logica, zoio da commit e dps apaga aqui.
+         if (!desafio1(input)) {
+      sout("Você falhou no desafio1 e foi forçado a recuar.");
+      return;
+    }
+
+    if (!desafio2(input)) {
+      sout("Você falhou no desafio2 e foi forçado a recuar.");
+      return;
+    }
           sout("Impressionado pela habilidade e coragem, Grom abaixou sua cabeça em respeito. \"Você provou ser digno. Pode passar.\"\n\n");
           sout("A partir daquele momento, passou a se questionar sobre o que mais enfrentaria...\n");
           do {
@@ -367,7 +375,239 @@ public class rpg {
     sout("Com a espada em mãos, você está preparado para enfrentar qualquer ameaça e proteger seu vilarejo.\n");
 
   }
+    
+//Desafios Floresta.
+  public static boolean desafio1(Scanner input) throws InterruptedException {
 
+    sout("\n                GROM: Para provar que eis digno, terá que resolver os seguintes desafios de lógica: :             ");
+    sout("\nEm um programa que o usuário insere dois números e então exiba a soma desses números. Qual seria a resposta correta: ");
+    sout("\n**************************************************************************************");
+    sout("\n                      Alternativas                             ");
+    sout("\n1- Para imprimir a soma o usuário precisará colocar o comando 'System.out.println(variavel da soma );'.");
+    sout("\n2- Para imprimir a soma o usuário precisará colocar o comando 'System.out.println(variavel do primeiro número);");
+    sout("\n**************************************************************************************");
+    sout("\nDigite a alternativa desejada. Caso queira que repita o enunciado do desafio, digite (3)");
+
+    int escolha = 0;
+
+    while (true) {
+      escolha = input.nextInt();
+      switch (escolha) {
+        case 1:
+          sout("\nParabéns, você acertou e pode seguir para o próximo desafio!! ");
+          return true;
+        case 2:
+          sout("\nDe onde vens com tanta ignorância?! Resposta Incorreta");
+          sout("\nRetornando...");
+          sout("\nEm um programa (JAVA) que o usuário insere dois números e então exiba a soma desses números. Qual seria a resposta correta: ");
+          sout("\n**************************************************************************************");
+          sout("\n                      Alternativas                             ");
+          sout("\n1- Para imprimir a soma o usuário precisará colocar o comando 'System.out.println(variavel da soma );'.");
+          sout("\n2- Para imprimir a soma o usuário precisará colocar o comando 'System.out.println(variavel do primeiro número);");
+          sout("\n**************************************************************************************");
+          sout("\nDigite a alternativa desejada. Caso queira que repita o enunciado do desafio, digite (3)");
+          break;
+        case 3:
+          sout("\nEm um programa (JAVA) que o usuário insere dois números e então exiba a soma desses números. Qual seria a resposta correta: ");
+          sout("\n**************************************************************************************");
+          sout("\n                      Alternativas                             ");
+          sout("\n1- Para imprimir a soma o usuário precisará colocar o comando 'System.out.println(variavel da soma );'.");
+          sout("\n2- Para imprimir a soma o usuário precisará colocar o comando 'System.out.println(variavel do primeiro número);");
+          sout("\n**************************************************************************************");
+          sout("\nDigite a alternativa desejada. Caso queira que repita o enunciado do desafio, digite (3)");
+          break;
+        default:
+          sout("\nResposta Inválida, tente novamente");
+          break;
+      }
     }
+  }
+
+  public static boolean desafio2(Scanner input) throws InterruptedException {
+    sout("\n                               GROM:  Criatura insolente, passou pelo primeiro, mas não passará pelo próximo.         ");
+    sout("\nEm um programa (JAVA) que o usuário insere um número e volta dizendo se ele é par ou impar. Qual seria a resposta correta: ");
+    sout("\n**************************************************************************************");
+    sout("\n                      Alternativas                             ");
+    sout("\n1- Para que ele descubra se o número é par ele precisa criar um if e dizer que o número inserido pelo usuário dividido por dois é igual a 0.");
+    sout("\n2- Para que ele descubra se o número é par ele precisa criar um if e dizer que o número inserido pelo usuário dividido por dois é igual a 1.");
+    sout("\n**************************************************************************************");
+    sout("\nDigite a alternativa desejada. Caso queira que repita o enunciado do desafio, digite (3)");
+
+    int escolha = 0;
+
+    while (true) {
+      escolha = input.nextInt();
+      switch (escolha) {
+        case 1:
+          sout("\nParabéns, você acertou e pode seguir para o próximo desafio!! ");
+          return true;
+        case 2:
+          sout("\nDe onde vens com tanta ignorância?! Resposta Incorreta");
+          sout("\nRetornando para o primeiro desafio...");
+          desafio1(input);
+          return false;
+        case 3:
+          sout("\n                                Segundo Desafio         ");
+          sout("\nEm um programa (JAVA) que o usuário insere um número e volta dizendo se ele é par ou impar. Qual seria a resposta correta: ");
+          sout("\n**************************************************************************************");
+          sout("\n                      Alternativas                             ");
+          sout("\n1- Para que ele descubra se o número é par ele precisa criar um if e dizer que o número inserido pelo usuário dividido por dois é igual a 0.");
+          sout("\n2- Para que ele descubra se o número é par ele precisa criar um if e dizer que o número inserido pelo usuário dividido por dois é igual a 1.");
+          sout("\n**************************************************************************************");
+          sout("\nDigite a alternativa desejada. Caso queira que repita o enunciado do desafio, digite (3)");
+          break;
+        default:
+          sout("\nResposta Inválida, tente novamente");
+          break;
+      }
+      
+    }
+   
+  }
+
+  public static boolean desafio3(Scanner input) throws InterruptedException {
+    sout("\n                                Terceiro Desafio         ");
+    sout("\nEm um programa (JAVA) que o usuário insere um número inteiro positivo e calcule o fatorial desse número. Qual seria a resposta correta: ");
+    sout("\n**************************************************************************************");
+    sout("\n                      Alternativas                             ");
+    sout("\n1- Para que ele descubra o fatorial do número inserido pelo usuário ele precisará criar um laço de repetição para multiplicar todos os números antes do inserido! ");
+    sout("\n2- Para que ele descubra o fatorial do número inserido pelo usuário ele precisará criar um laço de repetição para somar todos os números antes do inserido! ");
+    sout("\n**************************************************************************************");
+    sout("\nSe você deseja ir para o caminho da direita digite (1). Caso contrário digite (2). Caso queira que repita o enunciado do desafio, digite (3)");
+
+    int escolha = 0;
+
+    while (true) {
+      escolha = input.nextInt();
+      switch (escolha) {
+        case 1:
+          sout("\nParabéns, você acertou e pode seguir para o próximo desafio!! ");
+          return true;
+        case 2:
+          sout("\nResposta errada, retornando...");
+          sout("Retornando...");
+          sout("\n                                Terceiro Desafio         ");
+          sout("\nEm um programa (JAVA) que o usuário insere um número inteiro positivo e calcule o fatorial desse número. Qual seria a resposta correta: ");
+          sout("\n**************************************************************************************");
+          sout("\n                      Alternativas                             ");
+          sout("\n1- Para que ele descubra o fatorial do número inserido pelo usuário ele precisará criar um laço de repetição para multiplicar todos os números antes do inserido! ");
+          sout("\n2- Para que ele descubra o fatorial do número inserido pelo usuário ele precisará criar um laço de repetição para somar todos os números antes do inserido! ");
+          sout("\n**************************************************************************************");
+          sout("\nSe você deseja ir para o caminho da direita digite (1). Caso contrário digite (2). Caso queira que repita o enunciado do desafio, digite (3)");
+          return false;
+        case 3:
+          sout("\n                                Terceiro Desafio         ");
+          sout("\nEm um programa (JAVA) que o usuário insere um número inteiro positivo e calcule o fatorial desse número. Qual seria a resposta correta: ");
+          sout("\n**************************************************************************************");
+          sout("\n                      Alternativas                             ");
+          sout("\n1- Para que ele descubra o fatorial do número inserido pelo usuário ele precisará criar um laço de repetição para multiplicar todos os números antes do inserido! ");
+          sout("\n2- Para que ele descubra o fatorial do número inserido pelo usuário ele precisará criar um laço de repetição para somar todos os números antes do inserido! ");
+          sout("\n**************************************************************************************");
+          sout("\nSe você deseja ir para o caminho da direita digite (1). Caso contrário digite (2). Caso queira que repita o enunciado do desafio, digite (3)");
+          break;
+        default:
+          sout("\nResposta Inválida, tente novamente");
+          break;
+      }
+    }
+  }
+  //Desafios Pantâno
+  public static boolean desafio4(Scanner input) throws InterruptedException {
+
+    sout("\n                                           Quarto Desafio:");
+    sout("\nEm um programa (JAVA) que o usuário insere um número inteiro e verifica se é positivo, negativo ou zero. Qual seria a resposta correta:");
+    sout("\n**************************************************************************************");
+    sout("\n                                            Alternativas:");
+    sout("\n1- Para verificar se um número é positivo, negativo ou zero, o usuário deve usar uma estrutura if-else para comparar o número com 0.");
+    sout("\n2- Para verificar se um número é positivo, negativo ou zero, o usuário deve usar uma estrutura de repetição.");
+    sout("\n**************************************************************************************");
+    sout("\nSe você deseja ir para o caminho da direita digite (1). Caso contrário digite (2). Caso queira que repita o enunciado do desafio, digite (3)");
+
+    int escolha = 0;
+
+    while (true) {
+      escolha = input.nextInt();
+      switch (escolha) {
+        case 1:
+          sout("\nResposta errada, retornando...");
+          desafio3(input);
+          return false;
+        case 2:
+          sout("\nParabéns, você acertou e completou todos os desafios!!");
+          return true;
+        case 3:
+          sout("\nQuarto Desafio:");
+          sout("\nEm um programa (JAVA) que o usuário insere um número inteiro e verifica se é positivo, negativo ou zero. Qual seria a resposta correta:");
+          sout("\n**************************************************************************************");
+          sout("\nAlternativas:");
+          sout("\n1- Para verificar se um número é positivo, negativo ou zero, o usuário deve usar uma estrutura if-else para comparar o número com 0.");
+          sout("\n2- Para verificar se um número é positivo, negativo ou zero, o usuário deve usar uma estrutura de repetição.");
+          sout("\n**************************************************************************************");
+          sout("\nSe você deseja ir para o caminho da direita digite (1). Caso contrário digite (2). Caso queira que repita o enunciado do desafio, digite (3)");
+          break;
+        default:
+          sout("\nResposta Inválida, tente novamente");
+          break;
+      }
+    }
+
+  }
+  public static boolean desafio5(Scanner input) throws InterruptedException {
+
+    sout("\n                                           Quinto Desafio:");
+    sout("\nEm um programa (JAVA) para que serve as  seguintes variáveis: Boolean, int e String ");
+    sout("\n**************************************************************************************");
+    sout("\n                                            Alternativas:");
+    sout("\n1- Armazenar sequências de caracteres, Armazenar valores com ponto flutuante(1.01, 1.02, 1.03)..., Aramazenar valores('true', 'false')");
+    sout("\n2- Aramazenar valores('true', 'false'), Armazenar valores inteiros('0,1,2,3...), Armazenar sequências de caracteres.");
+    sout("\n**************************************************************************************");
+    sout("\nSe você deseja ir para o caminho da direita digite (1). Caso contrário digite (2). Caso queira que repita o enunciado do desafio, digite (3)");
+
+    int escolha = 0;
+
+    while (true) {
+      escolha = input.nextInt();
+      switch (escolha) {
+        case 1:
+          sout("\nResposta errada, retornando...");
+          desafio3(input);
+          return false;
+        case 2:
+          sout("\nParabéns, você acertou e completou todos os desafios!!");
+          return true;
+        case 3:
+          sout("\n                                           Quinto Desafio:");
+          sout("\nEm um programa (JAVA) para que serve as  seguintes variáveis: Boolean, int e String ");
+          sout("\n**************************************************************************************");
+          sout("\n                                            Alternativas:");
+          sout("\n1- Armazenar sequências de caracteres, Armazenar valores com ponto flutuante(1.01, 1.02, 1.03)..., Aramazenar valores('true', 'false')");
+          sout("\n2- Aramazenar valores('true', 'false'), Armazenar valores inteiros('0,1,2,3...), Armazenar sequências de caracteres.");
+          sout("\n**************************************************************************************");
+          sout("\nSe você deseja ir para o caminho da direita digite (1). Caso contrário digite (2). Caso queira que repita o enunciado do desafio, digite (3)");
+
+          break;
+        default:
+          sout("\nResposta Inválida, tente novamente");
+          break;
+      }
+    }
+  }
+
+  public static void iniciarDesafios() throws InterruptedException {
+    Scanner input = new Scanner(System.in);
+    boolean concluido = false;
+
+    while (!concluido) {
+      if (desafio3(input)) {
+        if (desafio4(input)) {
+          if (desafio5(input)) {
+            concluido = true;
+          }
+        }
+
+      }
+    }
+  }
+}
 
 
