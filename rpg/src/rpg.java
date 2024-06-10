@@ -6,102 +6,108 @@ public class rpg {
     public static void main(String[] args) throws Exception {
            menuJogo();
     }
-    public static void menuJogo() throws InterruptedException {
-    Scanner input = new Scanner(System.in);
-    String opcao;
-    do{ 
-      sout("Menu\n" +
-              "1 - Instruções\n" +
-              "2 - Jogar\n" +
-              "3 - Créditos\n" +
-              "4 - Sair\n" +
-              "Escolha uma opção: \n");
-      opcao = input.next();
-      switch (opcao){
-        case "1":
-          mostrarInstrucoes();
-          break;
-        case "2":
-          jogar();
-          break;
-        case "3":
-          mostrarCreditos();
-          break;
-        case "4":
-          sout("Saindo do jogo...");
-          break;
-        default:
-          sout("Opção inválida. Tente novamente.\n");
-      }
-         }while (!opcao.equals("4"));
-  }
-  public static void mostrarInstrucoes()throws InterruptedException{
-    Scanner input = new Scanner(System.in);
-    sout("Instruções do jogo: \n" +
-            "Heart of the dragon é um jogo que se baseira em dados para que ação aconteça como um rpg de mesa.\n" +
-            "Durente os combates os seus acertos e danos irão se basear neles\n" +
-            "Existem ataques que não necessitam de uma rolagem de acerto, mas elas só podem ser usadas uma vez, então as use com sabedoria\n");
-    sout("Digite qualquer tecla para retornar ao menu.\n");
-    String j = input.next();
-  }
-  public static void jogar()throws InterruptedException{
-      Scanner input = new Scanner(System.in);
-      int vida_player = 25, danoDec = 0;
-      String ataque1 = null, desc1 = null ,ataque2 = null,desc2=null,ataque3=null,desc3=null, erro1=null, erro2=null, escolha;
-      do {
-        sout("Antes de começarmos, Você precisa decidir arma você ira usar em combate\n" +
-                "1 - Espada\n" +
-                "2 - Machado Grande\n" +
-                "A sua escolha afetará diretamente o seu estilo de jogo\n");
-        escolha = input.next();
-        switch (escolha) {
-          case "1":
-            danoDec = 1;
-            ataque1 = "Golpear com a espada";
-            desc1 = "Você avança com sua espada, cortando o ar com um golpe poderoso que se choca contra o inimigo!\n";
-            erro1="Você tenta atingir seu inimigo, mas ele se esquiva no último momento, evitando o golpe.\n\n";
-            ataque2 = "Rajada de veneno";
-            desc2 = "Você lança um frasco de veneno, que se estilhaça sobre o inimigo, cobrindo-o com uma nuvem tóxica que causa danos ao longo do tempo.\n";
-            ataque3 = "Rajada Mistica";
-            desc3 = "Você invoca uma rajada de energia arcano que atinge o inimigo, envolvendo-o em chamas mágicas e causando danos devastadores.\n";
-            break;
-          case "2":
-            danoDec = 2;
-            ataque1 = "Atacar com o machado";
-            desc1 = "Você avança furiosamente com seu machado, desferindo um golpe poderoso que corta o ar e se choca contra o inimigo com força devastadora.\n";
-            erro1 = "Seu golpe não atinge o alvo, seu machado passa rente ao inimigo sem causar dano.\n\n";
-            ataque2 = "Ataque Descuidado";
-            desc2 = "Você se lança de forma imprudente em direção ao inimigo, ignorando sua própria defesa em troca de ataques mais poderosos. Seu golpe desajeitado atinge o alvo com força esmagadora\n";
-            erro2 = "Sua investida desajeitada não alcança o alvo, deixando-o exposto aos contra-ataques inimigos.\n\n";
-            ataque3 = "Espirito animal";
-            desc3 = "Você invoca o espírito de seu animal guia. Um lobo. que surge ao seu lado em uma manifestação etérea de sua fúria. \n" +
-                    "O espírito avança em direção ao inimigo com garras ou presas afiadas, desferindo golpes poderosos\n";
-            break;
-          default:
-            sout("Escolha uma opção valida!");
-        }
-      }while(!escolha.equals("1") && !escolha.equals("2"));
-      sout("Em um reino distante, um jovem herói perde seus pais após um ataque do dragão Astaroth. \nCom a possibilidade de um novo dragão ameaçando seu vilarejo, você parte em uma jornada solitária para salvar seu povo, quebrar a maldição e encontrar sua mãe desaparecida.");
-    floresta(danoDec,vida_player,ataque1,ataque2,ataque3,desc1,desc2,desc3,erro1,erro2);
-    pantano();
-  }
-  public static void mostrarCreditos() throws InterruptedException{
-      Scanner input = new Scanner(System.in);
-    sout("Desenvolvido por:\n" +
-            "João Pedro Zabarella Muniz\n" +
-            "Julia Souza Soares\n" +
-            "Maria Beatriz Monteiro Braga\n" +
-            "Gustavo Oliveira dos Santos\n");
-    sout("Digite qualquer tecla para retornar ao menu.\n");
-    String j = input.next();
-  }
+    //Menu de opções do jogo.
+ public static void menuJogo() throws InterruptedException {
+ Scanner input = new Scanner(System.in);
+ String opcao;
+ do{ 
+   sout("Menu\n" +
+           "1 - Instruções\n" +
+           "2 - Jogar\n" +
+           "3 - Créditos\n" +
+           "4 - Sair\n" +
+           "Escolha uma opção: \n");
+   opcao = input.next();
+   switch (opcao){
+     case "1":
+       mostrarInstrucoes();
+       break;
+     case "2":
+       jogar();
+       break;
+     case "3":
+       mostrarCreditos();
+       break;
+     case "4":
+       sout("Saindo do jogo...");
+       break;
+     default:
+       sout("Opção inválida. Tente novamente.\n");
+   }
+      }while (!opcao.equals("4"));
+}
+    //Função das instruções do Jogo
+public static void mostrarInstrucoes()throws InterruptedException{
+ Scanner input = new Scanner(System.in);
+ sout("Instruções do jogo: \n" +
+         "Heart of the dragon é um jogo que se baseia em dados para que ação aconteça como um rpg de mesa.\n" +
+         "Durente os combates os seus acertos e danos irão se basear neles\n" +
+         "Existem ataques que não necessitam de uma rolagem de acerto, mas elas só podem ser usadas uma vez, então as use com sabedoria\n");
+ sout("Digite qualquer tecla para retornar ao menu.\n");
+ String j = input.next();
+}
+    //Função para começar a Jogar.
+public static void jogar()throws InterruptedException{
+   Scanner input = new Scanner(System.in);
+   int vida_player = 25, danoDec = 0;
+   String ataque1 = null, desc1 = null ,ataque2 = null,desc2=null,ataque3=null,desc3=null, erro1=null, erro2=null, escolha;
+   do {
+     sout("Antes de começarmos, qual arma deseja usar em combate?\n" +
+             "1 - Espada\n" +
+             "2 - Machado Grande\n" +
+             "A sua escolha afetará diretamente o seu estilo de jogo\n");
+     escolha = input.next();
+     switch (escolha) {
+       case "1":
+         danoDec = 1;
+         ataque1 = "Golpear com a espada";
+         desc1 = "Você avança com sua espada, cortando o ar com um golpe poderoso que se choca contra o inimigo!\n";
+         erro1="Você tenta atingir seu inimigo, mas ele se esquiva no último momento, evitando o golpe.\n\n";
+         ataque2 = "Rajada de veneno";
+         desc2 = "Você lança um frasco de veneno, que se estilhaça sobre o inimigo, cobrindo-o com uma nuvem tóxica que causa danos ao longo do tempo.\n";
+         ataque3 = "Rajada Mistica";
+         desc3 = "Você invoca uma rajada de energia arcano que atinge o inimigo, envolvendo-o em chamas mágicas e causando danos devastadores.\n";
+         break;
+       case "2":
+         danoDec = 2;
+         ataque1 = "Atacar com o machado";
+         desc1 = "Você avança furiosamente com seu machado, desferindo um golpe poderoso que corta o ar e se choca contra o inimigo com força devastadora.\n";
+         erro1 = "Seu golpe não atinge o alvo, seu machado passa rente ao inimigo sem causar dano.\n\n";
+         ataque2 = "Ataque Descuidado";
+         desc2 = "Você se lança de forma imprudente em direção ao inimigo, ignorando sua própria defesa em troca de ataques mais poderosos. Seu golpe desajeitado atinge o alvo com força esmagadora\n";
+         erro2 = "Sua investida desajeitada não alcança o alvo, deixando-o exposto aos contra-ataques inimigos.\n\n";
+         ataque3 = "Espirito animal";
+         desc3 = "Você invoca o espírito de seu animal guia. Um lobo. que surge ao seu lado em uma manifestação etérea de sua fúria. \n" +
+                 "O espírito avança em direção ao inimigo com garras ou presas afiadas, desferindo golpes poderosos\n";
+         break;
+       default:
+         sout("Escolha uma opção valida!\n");
+     }
+   }while(!escolha.equals("1") && !escolha.equals("2"));
+   sout("Em um reino distante, voce,  perde seus pais após um ataque do dragão Astaroth em seu vilarejo. \nCom a possibilidade de um novo dragão ameaçando o vilarejo,  parte em uma jornada solitária para salvar seu povo, quebrar a maldição e encontrar sua mãe desaparecida.\n");
+ floresta(danoDec,vida_player,ataque1,ataque2,ataque3,desc1,desc2,desc3,erro1,erro2);
+ pantano(danoDec, ataque1, ataque2,ataque3,desc1,desc2,desc3,erro1,erro2);
+ caverna(danoDec, ataque1, ataque2,ataque3,desc1,desc2,desc3,erro1,erro2);
+}
+    //Função dos créditos.
+public static void mostrarCreditos() throws InterruptedException{
+   Scanner input = new Scanner(System.in);
+ sout("Desenvolvido por:\n" +
+         "João Pedro Zabarella Muniz\n" +
+         "Julia Souza Soares\n" +
+         "Maria Beatriz Monteiro Braga\n" +
+         "Gustavo Oliveira dos Santos\n");
+ sout("Digite qualquer tecla para retornar ao menu.\n");
+ String j = input.next();
+}
+    //Função responsável para aparecer os caracteres de texto lentamente.
+public static void sout(String texto) throws InterruptedException {
+ for (char caractere : texto.toCharArray()) {
+   System.out.print(caractere);
+   TimeUnit.MILLISECONDS.sleep(20); //Para rodar o jogo sem delay, troque esse valor para 0
+ }
+}
 
-  public static void sout(String texto) throws InterruptedException {
-    for (char caractere : texto.toCharArray()) {
-      System.out.print(caractere);
-      TimeUnit.MILLISECONDS.sleep(37);
-    }
-  }
 
     public static void floresta(int danoDec, int vida_player, String ataque1, String ataque2, String ataque3, String desc1, String desc2, String desc3, String erro1, String erro2) throws InterruptedException{
       Scanner input = new Scanner(System.in);
@@ -298,15 +304,29 @@ public class rpg {
     }
     return dano;
   }
-  public static int ataque_2(int danoDec){
-    int dano;
-    if (danoDec==1){
-      dano = (int) (Math.random() * 12) + 1;
-    } else{
-      dano = (int) (Math.random() * 8) + 1 + 6;
+  //Função responsável pelo dano do segundo ataque
+    public static int ataque_2(int danoDec, int fase) {
+        int dano;
+        if (danoDec == 1) {
+            if (fase == 1) {
+                dano = (int) (Math.random() * 12) + 1 + 5;
+            } else if (fase == 2) {
+                dano = (int) (Math.random() * 12) + 1 + 10;
+            } else {
+                dano = (int) (Math.random() * 8) +(int) (Math.random() * 8) +(int) (Math.random() * 8);
+            }
+        } else {
+            if (fase == 1) {
+                dano = (int) (Math.random() * 8) + 4 + 3 + 2 + 1 + 2;
+            } else if (fase == 2) {
+                dano = (int) (Math.random() * 8) + 8 + 5 + 4 + 1 + 2;
+            } else {
+                dano = (int) (Math.random() * 12) + 6 + (int) (Math.random() * 12) + 6;
+            }
+        }
+        return dano;
     }
-    return dano;
-  }
+
 
   public static int ataque_3(int danoDec) {
     int dano;
@@ -375,6 +395,178 @@ public class rpg {
     sout("Com a espada em mãos, você está preparado para enfrentar qualquer ameaça e proteger seu vilarejo.\n");
 
   }
+public static int comb4(int danoDec, String ataque1, String ataque2, String ataque3, String desc1, String desc2, String desc3, String erro1, String erro2) throws InterruptedException {
+        Scanner input = new Scanner(System.in);
+        int vida_player = 60;
+        int i=0, dano, fase = 2;
+        int defesa_player = 16;
+        int defesa_sombras = 11;
+        int acerto, r = -2, tre = -2;
+        int[] vidas = {15,15,15,3}; // Vetor usado para controlar a vida e a quantidade de inimigos exitentes no combate
+        //Sombra1 = vidas[0], Sombra2 = vidas[1], Sombra3 = vidas[2], inimigos[3]
+        String botao;
+        sout("Com um gesto dramático, Mordekai ergue a mão e desaparece em uma nuvem de sombras. O ar ao seu redor se torna mais frio, e a escuridão parece se condensar.\n" +
+                "De onde ele estava, surgem três figuras envoltas em trevas: os Guerreiros das Sombras.\n" +
+                "As figuras sombrias materializam-se, brandindo espadas negras que parecem absorver a pouca luz que resta.\n" +
+                "Seus olhos brilham com uma luz malévola enquanto se preparam para atacar, o ar ao redor vibrando com a energia sombria que emanam.\n" +
+                "A única coisa que os diferenciava era a cor de seus olhos: \no primeiro guerreiro tinha olhos brilhando em um vermelho sinistro \no segundo guerreiro ostentava olhos com um brilho verde ameaçador \ne o terceiro guerreiro tinha olhos de um azul gélido e penetrante.\n\n");
+        do {
+            sout("SEU TURNO!\n" +
+                    "Sua vida= " + vida_player + "\n");
+            String inimigo = escolhaAtaque(vidas); // retorna um valor entre 1 e 3 decidindo qual inimigo vai ser atacado
+            botao = escolhaHabilidade(ataque1, ataque2, ataque3, r, tre, danoDec);
+            switch (botao) {
+                case "1":
+                    acerto = acerto(defesa_sombras, fase);
+                    if (acerto == 1) {
+                        dano = ataque_1(danoDec, fase);
+                        sout(desc1);
+                        vidas = vidas(vidas, inimigo, dano); // retorna as vidas e a quantidade de inimigos, caso o player derrote um inimigo na rodada o valor de inimigos diminui
+                        sout("tirando " + dano + " de dano\n\n");
+                    } else if (acerto == 2) {
+                        dano = ataque_1(danoDec, fase) + 2;
+                        sout(desc1);
+                        vidas = vidas(vidas, inimigo, dano);
+                        sout("Acertando um crítico que tira " + dano + " de dano\n\n");
+                    }
+                    else {
+                        sout(erro1);
+                    }
+                    break;
+                case "2":
+                    if (danoDec == 1) {
+                        sout(desc2);
+                        dano = ataque_2(danoDec, fase);
+                        vidas = vidas(vidas, inimigo, dano);
+                        sout("tirando " + dano + " de dano\n\n");
+                    }
+                    else if (danoDec == 2) {
+                        i=10;
+                        acerto = acerto(defesa_sombras, fase);
+                        if (acerto==1) {
+                            dano = ataque_2(danoDec, fase);
+                            sout(desc2);
+                            vidas = vidas(vidas, inimigo, dano);
+                            sout("tirando " + dano + " de dano\n\n");
+                        } else if (acerto==2) {
+                            dano = ataque_2(danoDec, fase) + 2;
+                            sout(desc2);
+                            vidas = vidas(vidas, inimigo, dano);
+                            sout("Acertando um crítico que tira " + dano + " de dano\n\n");
+                        }
+                        else {
+                            sout(erro2);
+                        }
+                    }
+                    r++; // pelo player ter uma carga maior de habilidades o valor vai aumentando até chegas a 1 e ele ser proibido de usar a habilidade
+                    break;
+                case "3":
+                    sout(desc3);
+                    dano = ataque_3(danoDec, fase);
+                    vidas = vidas(vidas, inimigo, dano);
+                    sout("Tirando " + dano + " de dano\n\n");
+                    tre++;
+                    break;
+                default:
+                    sout("Escolha uma opção valida!");
+            }
+            if (vidas[1]>0  && vida_player>0) {
+                sout("O guerreiro vermelho se prepara para atacar\n");
+                vida_player = ataqueSombras(i, vida_player, defesa_player);
+            }
+            if (vidas[0]>0  && vida_player>0){
+                sout("O guerreiro verde se prepara para atacar\n");
+                vida_player = ataqueSombras(i, vida_player, defesa_player);
+            }
+            if (vidas[2]>0  && vida_player>0){
+                sout("O guerreiro azul se prepara para atacar\n");
+                vida_player = ataqueSombras(i, vida_player, defesa_player);
+            }
+            i = 0; // retirando a pealidade caso a habilidade "Ataque descuidado" tenha sido usada
+        } while (vida_player>0 && vidas[3]>0);
+        if (vida_player<=0){
+            sout("Com um último suspiro, você tomba no chão, suas feridas fatais cobrando seu preço. Seus olhos se fecham lentamente, e o silêncio da solidão envolve seu último momento.\n");
+            do {
+                sout("Deseja tentar novamente?" +
+                        "\n1- Sim" +
+                        "\n2- Não\n");
+                botao = input.next();
+                if(!botao.equals("1") && !botao.equals("2") && !botao.equals("3")) {
+                    sout("Selecione uma opção valida!\n");
+                }
+            }while (!botao.equals("1") && !botao.equals("2"));
+            switch (botao) {
+                case "1":
+                    break;
+                case "2":
+                    sout("\nObrigado por jogar");
+                    System.exit(0);
+            }
+        }
+        return vida_player;
+    }
+public static int golpeTrevas(int dado_inimigo, int defesa_player) throws InterruptedException {
+        int dano = 0;
+        if (dado_inimigo >= defesa_player) {
+            sout("O golpe poderoso atinge em cheio, a escuridão da espada amplificando a dor do corte.\n");
+            dano = (int) ((Math.random() * 6) + 3) ;
+            sout("Tirando " + dano + " de dano\n\n");
+        } else {
+            sout("O golpe poderoso passa ao lado, a lâmina sombria errando seu alvo por um triz.\n\n");
+        }
+        return dano;
+    }
+public static int espadaArcana(int dado_inimigo, int defesa_player) throws InterruptedException {
+        int dano = 0;
+        if (dado_inimigo >= defesa_player) {
+            sout("Mordekai balança sua espada mágica, e a lâmina brilhante corta profundamente, você sente tanto o golpe cortante quanto uma queimadura arcana enquanto a energia mágica percorre sua ferida.\n");
+            dano = (int) ((Math.random() * 10) + 1) + 4 + (int) ((Math.random() * 6) + 1);
+            sout("Tirando " + dano + " de dano\n\n");
+        } else {
+            sout("Mordekai balança sua espada mágica, mas você se desvia agilmente e a lâmina brilhante corta o ar ao seu lado sem acertar.\n\n");
+        }
+        return dano;
+    }
+public static int golpeFantasmagorico(int dado_inimigo, int defesa_player) throws InterruptedException {
+        int dano = 0;
+        if (dado_inimigo >= defesa_player) {
+            sout("Mordekai ataca com um golpe que parece atravessar a realidade. A lâmina parece cortar não apenas sua carne, mas também sua mente, causando uma dor física e psíquica que faz sua visão tremer.\n");
+            dano = (int) ((Math.random() * 4) + 1) + (int) ((Math.random() * 4) + 1) + (int) ((Math.random() * 4) + 1) + 3;
+            sout("Tirando " + dano + " de dano\n\n");
+        } else {
+            sout("Mordekai ataca com um golpe que parece atravessar a realidade, mas você percebe a ilusão a tempo e desvia para o lado, escapando da dor que ele poderia ter causado.\n\n");
+        }
+        return dano;
+    }
+public static int garrasCortantes(int dado_inimigo, int defesa_player) throws InterruptedException {
+        int dano = 0;
+        sout("Astaroth levanta uma de suas garras maciças, afiadas como lâminas, e as lança em sua direção com uma precisão mortal.\n");
+        if (dado_inimigo >= defesa_player) {
+            sout("As garras afiadas de Astaroth rasgam através de sua armadura, deixando cortes profundos e sangrentos.\n");
+            dano = (int) ((Math.random() * 6) + 1) + (int) ((Math.random() * 6) + 1) + 6;
+            sout("Tirando " + dano + " de dano\n\n");
+        } else {
+            sout("Você se esquiva no último momento, as garras de Astaroth cortando o ar onde você estava um instante antes.\n\n");
+        }
+        return dano;
+    }
+public static int baterAsas(int dado_inimigo, int defesa_player) throws InterruptedException {
+        int dano = 0;
+        sout("Astaroth bate suas asas poderosas, criando uma onda de choque que se propaga pelo ar, tentando derrubar tudo em seu caminho.\n");
+        if (dado_inimigo >= defesa_player) {
+            sout("As asas poderosas de Astaroth criam uma onda de choque que o lança ao chão, o impacto sacudindo seus ossos.\n");
+            dano = (int) ((Math.random() * 6) + 1) + (int) ((Math.random() * 6) + 1) + (int) ((Math.random() * 6) + 1);
+            sout("Tirando " + dano + " de dano\n\n");
+        } else {
+            sout("Você se mantém firme enquanto a onda de choque passa, conseguindo evitar ser derrubado pelo impacto.\n\n");
+        }
+        return dano;
+    }
+
+
+
+
+
     
 //Desafios Floresta.
   public static boolean desafio1(Scanner input) throws InterruptedException {
@@ -423,47 +615,46 @@ public class rpg {
     }
   }
 
-  public static boolean desafio2(Scanner input) throws InterruptedException {
-    sout("\n                               GROM:  Criatura insolente, passou pelo primeiro, mas não passará pelo próximo.         ");
-    sout("\nEm um programa (JAVA) que o usuário insere um número e volta dizendo se ele é par ou impar. Qual seria a resposta correta: ");
-    sout("\n**************************************************************************************");
-    sout("\n                      Alternativas                             ");
-    sout("\n1- Para que ele descubra se o número é par ele precisa criar um if e dizer que o número inserido pelo usuário dividido por dois é igual a 0.");
-    sout("\n2- Para que ele descubra se o número é par ele precisa criar um if e dizer que o número inserido pelo usuário dividido por dois é igual a 1.");
-    sout("\n**************************************************************************************");
-    sout("\nDigite a alternativa desejada. Caso queira que repita o enunciado do desafio, digite (3)");
+  //Função respponsável pelo segundo desafio(Segundo desafio da Floresta).
+public static boolean desafio2(Scanner input) throws InterruptedException {
+ sout("\n                               GROM:  Criatura insolente, passou pelo primeiro, mas não passará pelo próximo.         ");
+ sout("\nEm um programa (JAVA) que o usuário insere um número e volta dizendo se ele é par ou impar. Qual seria a resposta correta: ");
+ sout("\n******************************");
+ sout("\n                      Alternativas                             ");
+ sout("\n1- Para que ele descubra se o número é par ele precisa criar um if e dizer que o número inserido pelo usuário dividido por dois é igual a 0.");
+ sout("\n2- Para que ele descubra se o número é par ele precisa criar um if e dizer que o número inserido pelo usuário dividido por dois é igual a 1.");
+ sout("\n******************************");
+ sout("\nDigite a alternativa desejada. Caso queira que repita o enunciado do desafio, digite (3)");
 
-    int escolha = 0;
+ String escolha = "0";
 
-    while (true) {
-      escolha = input.nextInt();
-      switch (escolha) {
-        case 1:
-          sout("\nParabéns, você acertou e pode seguir para o próximo desafio!! ");
-          return true;
-        case 2:
-          sout("\nDe onde vens com tanta ignorância?! Resposta Incorreta");
-          sout("\nRetornando para o primeiro desafio...");
-          desafio1(input);
-          return false;
-        case 3:
-          sout("\n                                Segundo Desafio         ");
-          sout("\nEm um programa (JAVA) que o usuário insere um número e volta dizendo se ele é par ou impar. Qual seria a resposta correta: ");
-          sout("\n**************************************************************************************");
-          sout("\n                      Alternativas                             ");
-          sout("\n1- Para que ele descubra se o número é par ele precisa criar um if e dizer que o número inserido pelo usuário dividido por dois é igual a 0.");
-          sout("\n2- Para que ele descubra se o número é par ele precisa criar um if e dizer que o número inserido pelo usuário dividido por dois é igual a 1.");
-          sout("\n**************************************************************************************");
-          sout("\nDigite a alternativa desejada. Caso queira que repita o enunciado do desafio, digite (3)");
-          break;
-        default:
-          sout("\nResposta Inválida, tente novamente");
-          break;
-      }
-      
-    }
-   
-  }
+ while (true) {
+   escolha = input.next();
+   switch (escolha) {
+     case "1":
+       sout("\nParabéns, você acertou e pode seguir para o próximo desafio!! ");
+       return true;
+     case "2":
+       sout("\nDe onde vens com tanta ignorância?! Resposta Incorreta");
+       sout("\nRetornando para o primeiro desafio...");
+       return false;
+     case "3":
+       sout("\n                                Segundo Desafio         ");
+       sout("\nEm um programa (JAVA) que o usuário insere um número e volta dizendo se ele é par ou impar. Qual seria a resposta correta: ");
+       sout("\n******************************");
+       sout("\n                      Alternativas                             ");
+       sout("\n1- Para que ele descubra se o número é par ele precisa criar um if e dizer que o número inserido pelo usuário dividido por dois é igual a 0.");
+       sout("\n2- Para que ele descubra se o número é par ele precisa criar um if e dizer que o número inserido pelo usuário dividido por dois é igual a 1.");
+       sout("\n******************************");
+       sout("\nDigite a alternativa desejada. Caso queira que repita o enunciado do desafio, digite (3)");
+       break;
+     default:
+       sout("\nResposta Inválida, tente novamente");
+       break;
+   }
+ }
+}
+
 
   public static boolean desafio3(Scanner input) throws InterruptedException {
     sout("\n                                Terceiro Desafio         ");
@@ -608,6 +799,52 @@ public class rpg {
       }
     }
   }
+//Função respponsável pelo sexto desafio(Primeiro desafio da caevrna).
+    public static boolean desafio6(Scanner input) throws InterruptedException {
+        sout("\n                               Sexto Desafio         ");
+        sout("\nEm um programa (JAVA) quando o usúario tem diversas funções em seu código, qual seria o nome dado a função principal onde ele terá que adicionar todas as outras funções?");
+        sout("\n**************************************************************************************");
+        sout("\n                      Alternativas                             ");
+        sout("\n1- O nome da função é 'main' ");
+        sout("\n2- O nome da função é 'String ' ");
+        sout("\n**************************************************************************************");
+        sout("\nSe você deseja ir para o caminho da direita digite (1). Caso contrário digite (2). Caso queira que repita o enunciado do desafio, digite (3)");
+
+        String escolha = "0";
+
+        while (true) {
+            escolha = input.next();
+            switch (escolha) {
+                case "1":
+                    sout("\nParabéns, você acertou e pode seguir para o próximo desafio!! ");
+                    return true;
+                case "2":
+                    sout("\nDe onde vens com tanta ignorância?! Resposta Incorreta");
+                    sout("\nRetornando...");
+                    sout("\nEm um programa (JAVA) quando o usúario tem diversas funções em seu código, qual seria o nome dado a função principal onde ele terá que adicionar todas as outras funções?");
+                    sout("\n**************************************************************************************");
+                    sout("\n                      Alternativas                             ");
+                    sout("\n1- O nome da função é 'main' ");
+                    sout("\n2- O nome da função é 'String ' ");
+                    sout("\n**************************************************************************************");
+                    sout("\nSe você deseja ir para o caminho da direita digite (1). Caso contrário digite (2). Caso queira que repita o enunciado do desafio, digite (3)");
+                case "3":
+                    sout("\n                               Sexto Desafio         ");
+                    sout("\nEm um programa (JAVA) quando o usúario tem diversas funções em seu código, qual seria o nome dado a função principal onde ele terá que adicionar todas as outras funções?");
+                    sout("\n**************************************************************************************");
+                    sout("\n                      Alternativas                             ");
+                    sout("\n1- O nome da função é 'main' ");
+                    sout("\n2- O nome da função é 'String ' ");
+                    sout("\n**************************************************************************************");
+                    sout("\nSe você deseja ir para o caminho da direita digite (1). Caso contrário digite (2). Caso queira que repita o enunciado do desafio, digite (3)");
+                    break;
+                default:
+                    sout("\nResposta Inválida, tente novamente");
+                    break;
+            }
+        }
+    }
+
 }
 
 
