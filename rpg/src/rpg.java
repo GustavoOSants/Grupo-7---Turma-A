@@ -159,155 +159,189 @@ public static void floresta(int danoDec, int vida_player, String ataque1, String
        f = input.next();
      }
 
-  public static void comb3(int danoDec, int vida_player, String ataque1, String ataque2, String ataque3, String desc1, String desc2, String desc3, String erro1, String erro2) throws InterruptedException{
-    int i = 0, dado_inimigo, dano, decisao;
-    String botao;
-    int defesa_player = 17;
-    int defesa_inimigo = 12;
-    int acerto;
-    int vida_gorila = 50;
-    Random random = new Random();
-    int r=0;
-    int tre = 0;
-    do {
-      sout("SEU TURNO!\n" +
-              "Sua vida= " + vida_player +
-              "\nVida do boss= " + vida_gorila + "\n");
-      botao = escolhaHabilidade(ataque1, ataque2, ataque3, r, tre, danoDec);
-      switch (botao) {
-        case "1":
-          acerto = acerto(defesa_inimigo);
-          if (acerto == 1) {
-            dano = ataque_1(danoDec);
-            vida_gorila -= dano;
-            sout(desc1);
-            sout("tirando " + dano + " de dano\n\n");
-          } else if (acerto == 2) {
-            dano = ataque_1(danoDec) + 2;
-            vida_gorila -= dano;
-            sout(desc1);
-            sout("Acertando um crítico que tira " + dano + " de dano\n\n");
-          } else {
-            sout(erro1);
-          }
-          break;
-        case "2":
-          if (danoDec == 1) {
-            sout(desc2);
-            dano = ataque_2(danoDec);
-            vida_gorila -= dano;
-            sout("tirando " + dano + " de dano \n\n");
-          } else if (danoDec == 2) {
-            i = 10;
-            acerto = acerto(defesa_inimigo);
-            if (acerto == 1) {
-              dano = ataque_2(danoDec);
-              vida_gorila -= dano;
-              sout(desc2);
-              sout("tirando " + dano + " de dano\n\n");
-            } else if (acerto == 2) {
-              dano = ataque_2(danoDec) + 2;
-              vida_gorila -= dano;
-              sout(desc2);
-              sout("Acertando um crítico que tira " + dano + " de dano\n\n");
-            } else {
-              sout(erro2);
+    //Função responsavel pela primeira luta do jogo contra o gorila
+    public static boolean comb3(int danoDec, int vida_player, String ataque1, String ataque2, String ataque3, String desc1, String desc2, String desc3, String erro1, String erro2) throws InterruptedException{
+        Scanner input = new Scanner(System.in);
+        int i = 0, dado_inimigo, dano, decisao, fase = 1;
+        String botao;
+        int defesa_player = 17; // Defesa do player, a maquina precisa tirar um numero maior do que esse para poder dar dano no player
+        int defesa_inimigo = 12; // Defesa do boss, o jogador precisa tirar um numero maior do que esse para poder dar dano no player
+        int acerto;
+        int vida_gorila = 50;
+        Random random = new Random();
+        int r=0; // Permite que as habilidades que não necessitam de dado de acerto tenham uma limitação
+        int tre = 0; // Permite que as habilidades que não necessitam de dado de acerto tenham uma limitação
+        do {
+            sout("SEU TURNO!\n" +
+                    "Sua vida= " + vida_player +
+                    "\nVida do boss= " + vida_gorila + "\n"); //Serve para mostrar a vida do player e a vida do boss
+            botao = escolhaHabilidade(ataque1, ataque2, ataque3, r, tre, danoDec); // retorna um valor de 1 a 3 para decidir qual habilidade o player usou
+            switch (botao) {
+                case "1":
+                    acerto = acerto(defesa_inimigo, fase); // retorna um valor de 0 a 2 para saber se o acerto foi atingido ou não, e se foi critico
+                    if (acerto == 1) { // caso acerte
+                        dano = ataque_1(danoDec, fase); // retorna o dano do ataque
+                        vida_gorila -= dano; // atinge o boss
+                        sout(desc1);
+                        sout("tirando " + dano + " de dano\n\n");
+                    } else if (acerto == 2) { // caso seja critico
+                        dano = ataque_1(danoDec, fase) + 2; // retorna o dano do ataque mais o critico
+                        vida_gorila -= dano;
+                        sout(desc1);
+                        sout("Acertando um crítico que tira " + dano + " de dano\n\n");
+                    } else { // caso erre
+                        sout(erro1);
+                    }
+                    break;
+                case "2":
+                    if (danoDec == 1) { // caso o jogador tenha escolhido a espada, ele não precisa rodar o acerto, mas só pode usar a habilidade uma vez
+                        sout(desc2);
+                        dano = ataque_2(danoDec, fase);
+                        vida_gorila -= dano;
+                        sout("tirando " + dano + " de dano \n\n");
+                    } else if (danoDec == 2) { // caso seja o machado ele fica livre para usar quantas vezes quiser, mas precisa rolar acerto
+                        i = 10; // serve para saber se a habilidade foi usada e poder aplicar a penalidade mais para frente no codigo
+                        acerto = acerto(defesa_inimigo, fase);
+                        if (acerto == 1) {
+                            dano = ataque_2(danoDec, fase);
+                            vida_gorila -= dano;
+                            sout(desc2);
+                            sout("tirando " + dano + " de dano\n\n");
+                        } else if (acerto == 2) {
+                            dano = ataque_2(danoDec, fase) + 2;
+                            vida_gorila -= dano;
+                            sout(desc2);
+                            sout("Acertando um crítico que tira " + dano + " de dano\n\n");
+                        } else {
+                            sout(erro2);
+                        }
+                    }
+                    r = 1; // Aqui fica o limitador caso ele tenha escolhido a espada
+                    break;
+                case "3":
+                    sout(desc3);
+                    dano = ataque_3(danoDec, fase);
+                    vida_gorila -= dano;
+                    sout("Tirando " + dano + " de dano\n\n");
+                    tre = 1; // limitando o uso da habilidade novamente
+                    break;
+                default:
+                    sout("Escolha uma opção valida!\n");
             }
-          }
-          r = 1;
-          break;
-        case "3":
-          sout(desc3);
-          dano = ataque_3(danoDec);
-          vida_gorila -= dano;
-          sout("Tirando " + dano + " de dano\n\n");
-          tre = 1;
-          break;
-        default:
-          sout("Escolha uma opção valida!");
-      }
-      if (vida_gorila > 0) {
-        sout("O Gorila se prepara para atacar\n");
-        decisao = (int) (Math.random() * 3) + 1;
-        dado_inimigo = random.nextInt(20) + 12;
-        if (i == 10) {
-          dado_inimigo += 2;
-          i = 0;
-        }
-        switch (decisao) {
-          case 1:
-            //palmas
-            vida_player -= palmas(defesa_player,dado_inimigo);
-            break;
-          case 2:
-            // punho
-            vida_player -= punho(defesa_player, dado_inimigo);
-            break;
-          case 3:
-            // cabeçada
-            vida_player -= cabeca(defesa_player,dado_inimigo);
-            break;
-        }
+            if (vida_gorila > 0) { //caso o gorila sobreviva a rodada do player ele ataca
+                sout("O Gorila se prepara para atacar\n");
+                decisao = (int) (Math.random() * 3) + 1; // A forma da maquina decidir qual ataque vai usar é gerando um numero aleatorio equivalente a algum ataque
+                dado_inimigo = random.nextInt(20) + 12; // dado de acerto do inimigo
+                if (i == 10) { // Penalidade caso o jogador tenha escolhido o machado e tenha usado a habilidade "Ataque descuidado"
+                    dado_inimigo += 2; // As chances do inimigo acertar o jogador são maiores
+                    i = 0; // A penalidade é removida
+                }
+                switch (decisao) {
+                    case 1:
+                        // Golpe do gorila chamado palmas
+                        vida_player -= palmas(defesa_player,dado_inimigo);
+                        break;
+                    case 2:
+                        // Golpe do gorila chamada punho
+                        vida_player -= punho(defesa_player, dado_inimigo);
+                        break;
+                    case 3:
+                        // Golpe do gorila chamado cabeçada
+                        vida_player -= cabeca(defesa_player,dado_inimigo);
+                        break;
+                }}
+        }while (!(vida_player <= 0) && !(vida_gorila <= 0)); // O combate fica rodando até o gorila ou o jogador tenham suas vidas zeradas
         if (vida_player<=0){
-          sout("Com um último suspiro, você tomba no chão, suas feridas fatais cobrando seu preço. Seus olhos se fecham lentamente, e o silêncio da solidão envolve seu último momento.");
-          System.exit(0);
+            sout("Com um último suspiro, você tomba no chão, suas feridas fatais cobrando seu preço. Seus olhos se fecham lentamente, e o silêncio da solidão envolve seu último momento.\n");
+            do {
+                sout("Deseja tentar novamente?" +
+                        "\n1- Sim" +
+                        "\n2- Não\n");
+                botao = input.next();
+                if(!botao.equals("1") && !botao.equals("2") && !botao.equals("3")) {
+                    sout("Selecione uma opção valida!\n");
+                }
+            }while (!botao.equals("1") && !botao.equals("2")); // a pergunta continuara a aparecer até o jogador escolher uma alternativa valida
+            switch (botao) {
+                case "1":
+                    return true; // caso ele tenha perdido e queira jogar novamente, o codigo reinicia
+                case "2":
+                    sout("\nObrigado por jogar");
+                    System.exit(0); // caso ele tenha perdido e não queira jogar novamente, o codigo para
+            }
+            return true;
         }
-      } else {
-        sout("O imponente gorila solta um rugido final, seu corpo colossal tombando pesadamente ao chão. \n" +
-                "Seus olhos, uma vez cheios de fúria e selvageria, agora perdem seu brilho, refletindo apenas o vazio da morte. \n" +
-                "O silêncio preenche a clareira da floresta, enquanto você observa o gigante caído.");
-
-      }
+        else {
+            sout("O imponente Gorila solta um rugido final, seu corpo colossal tombando pesadamente ao chão. \n" +
+                    "Seus olhos, uma vez cheios de fúria e selvageria, agora perdem seu brilho, refletindo apenas o vazio da morte. \n" +
+                    "O silêncio preenche a clareira da floresta, enquanto você observa o gigante caído.");
+            return false; // caso ele tenha vencido o codigo volta para a função da floresta e sai do laço de repetição
+        }
     }
-    while (!(vida_player <= 0) && !(vida_gorila <= 0)) ;
-  }
-
-  public static String escolhaHabilidade(String ataque1, String ataque2, String ataque3, int r, int tre, int danoDec) throws InterruptedException {
-    String botao;
-    Scanner input = new Scanner(System.in);
-    do {
-      sout("Escolha qual ataque você irá usar\n");
-      sout("1 - " + ataque1 +
-              "\n2 - " + ataque2 +
-              "\n3 - " + ataque3 + "\n");
-      botao = input.next();
-      if(!botao.equals("1") && !botao.equals("2") && !botao.equals("3")){
-        sout("Selecione uma opção valida!\n");
-      } else if (botao.equals("2") && r==1 && danoDec==1){
-        sout("Você só pode usar essa habilidade uma vez por comabte!\n");
-        botao = "0";
-      } else if (botao.equals("3") && tre==1){
-        sout("Você só pode usar essa habilidade uma vez por comabte!\n");
-        botao = "0";
-      }
-    } while(!botao.equals("1") && !botao.equals("2") && !botao.equals("3"));
-    return botao;
-  }
-  public static int acerto(int defesa_inimigo) throws InterruptedException {
-    Scanner input = new Scanner(System.in);
-    int acerto;
-    sout("Pressione qualquer tecla para rodar o dado\n");
-    String l = input.next();
-    int dado = (int) (Math.random() * 20) + 6;
-    sout("Você tirou: " + dado + "\n");
-    if (dado == 25){
-      acerto = 2;
-    } else if (dado>=defesa_inimigo){
-      acerto = 1;
-    } else{
-      acerto = 0;
+    //Função responsável para escolher as habilidades do usuário.
+    public static String escolhaHabilidade(String ataque1, String ataque2, String ataque3, int r, int tre, int danoDec) throws InterruptedException {
+        String botao;
+        Scanner input = new Scanner(System.in);
+        do {
+            sout("Escolha qual ataque você irá usar\n");
+            sout("1 - " + ataque1 +
+                    "\n2 - " + ataque2 +
+                    "\n3 - " + ataque3 + "\n");
+            botao = input.next();
+            if (!botao.equals("1") && !botao.equals("2") && !botao.equals("3")) {
+                sout("Selecione uma opção valida!\n");
+            } else if (botao.equals("2") && r == 1 && danoDec == 1) {
+                sout("Você já usou todas as cargas dessa habilidade!\n");
+                botao = "0";
+            } else if (botao.equals("3") && tre == 1) {
+                sout("Você já usou todas as cargas dessa habilidade!\n");
+                botao = "0";
+            }
+        } while (!botao.equals("1") && !botao.equals("2") && !botao.equals("3")); // enquanto não digitar uma opção valido a mensagem volta a se repetir
+        return botao;
     }
-    return acerto;
-  }
-  public static int ataque_1(int danoDec){
-    int dano;
-    if (danoDec==1){
-      dano = (int) (Math.random() * 12) + 3 +3;
-    } else{
-      dano = (int) (Math.random() * 8) + 3 + 4;
+    //Função responsável pelo acerto da habilidade.
+    public static int acerto(int defesa_inimigo, int fase) throws InterruptedException {
+        Scanner input = new Scanner(System.in);
+        int acerto;
+        sout("Pressione qualquer tecla para rolar o dado\n");
+        String l = input.next();
+        int dado = (int) (Math.random() * 20) + 6; // Este representa o dado de acerto
+        if(fase==3){
+            dado += 6;
+        }
+        sout("Você tirou: " + dado + "\n");
+        if (dado >= 25){ //Se o dado for maior que 25 significa que o usuario tirou um critico e vai dar mais dano
+            acerto = 2;
+        } else if (dado>=defesa_inimigo){ // se for igual ou maior que a defesa do inimigo vai acertar golpe
+            acerto = 1;
+        } else{ // e se n for nenhum dos dois casos ele erra o ataque
+            acerto = 0;
+        }
+        return acerto;
     }
-    return dano;
-  }
+    //Função responsável pelo dano do primeiro ataque.
+    public static int ataque_1(int danoDec, int fase) {
+        int dano;
+        if (danoDec == 1) {
+            if (fase == 1) { // dependendo da fase em que ele esteja os danos são equivalentes
+                dano = (int) (Math.random() * 12) + 3 + 3 + 1;
+            } else if (fase == 2) {
+                dano = (int) (Math.random() * 12) + 5 + 4 + 1;
+            } else {
+                dano = (int) (Math.random() * 10) + (int) (Math.random() * 10) + 6;
+            }
+        } else { // esse if serve para verificar qual dano deve ser aplicado de acordo com a arma escolhida
+            if (fase == 1) {
+                dano = (int) (Math.random() * 8) + 4 + 3 + 2 + 1;
+            } else if (fase == 2) {
+                dano = (int) (Math.random() * 8) + 8 + 5 + 4 + 1;
+            } else {
+                dano = (int) (Math.random() * 10) + (int) (Math.random() * 10) + 6;
+            }
+        }
+        return dano;
+    }
   //Função responsável pelo dano do segundo ataque
     public static int ataque_2(int danoDec, int fase) {
         int dano;
@@ -399,6 +433,38 @@ public static void floresta(int danoDec, int vida_player, String ataque1, String
     sout("Com a espada em mãos, você está preparado para enfrentar qualquer ameaça e proteger seu vilarejo.\n");
 
   }
+    public static void caverna(int danoDec, String ataque1, String ataque2, String ataque3, String desc1, String desc2, String desc3, String erro1, String erro2) throws InterruptedException {
+        Scanner input = new Scanner(System.in);
+        boolean passou;
+        sout("Após sua longa jornada, finalmente chegou ao seu ultimo obstáculo: uma caverna lendária nas profundezas de uma montanha, o covil do dragão.\n\n" +
+                "A atmosfera era pesada, e um vento gélido soprava de dentro da montanha. A escuridão da caverna parecia engolir qualquer luz que ousasse entrar, mas, você avança sem hesitar." +
+                "Logo ao entrar na caverna, encontrou seu primeiro desafio: um vasto penhasco que dividia o caminho.\n" +
+                "O abismo parecia interminável, e o eco da água caindo de uma cachoeira distante aumentava a sensação de desolação.\n Olha ao redor, buscando alguma maneira de atravessar o abismo. \n Seu olhar é atraído por uma pedra solta, a única coisa que parece fora de lugar na superfície aparentemente imutável das rochas."
+                + " \nCom cautela, você se aproxima e, ao tocar a pedra, ela cede um pouco, revelando um mecanismo oculto. "
+                + "\nSubitamente, um pedaço de rocha se move, e um conjunto de inscrições antigas brilha suavemente na superfície da pedra.");
+        desafio6(input);
+        sout("Você chegou ao outro lado, passou pelo penhasco, porém está de frente a uma parede mágica, e precisa decifrar um enigma para passar. \n");
+        desafio7(input);
+        sout("Com sua habilidade e destreza, atravessa a parede mágica, e como recompensa, recebe o ultimo fragmento da espada. \n" +
+                "A espada agora está completa, e com isso, irradia um poder sem igual, refletindo sua origem divina. Seus poderes são vastos e multifacetados, cada um dos fragmentos agora reunidos contribuindo com uma parte essencial de sua força total.\n" +
+                "Segue seu caminho, e sente o ar ficando mais quente e denso. O som do seus passos ecoam, e sente que está se aproximando do covil.\n" +
+                "Em uma vasta câmara, o dragão repousa em um trono colossal de pedra negra, esculpido diretamente na rocha da montanha. \n" +
+                "O trono estava adornado com ossos e fragmentos de armaduras antigas, símbolos de seu domínio. \n" +
+                "Você avista aquela criatura  gigantesca, sua pele é coberta por escamas brancas como a neve, mas duras como aço, seus olhos  brilhando com uma luz fria e cruel. \n" +
+                "O chão ao redor do trono está marcado por sulcos profundos, onde suas garras afiadas tinham raspado a pedra, e manchas escuras indicavam os locais onde o fogo do dragão havia queimado.\n" +
+                "Você com a espada em punho e o coração firme, avança, sabendo que não tem volta.\n");
+        do{
+            passou = comb6(danoDec, ataque1, ataque2, ataque3, desc1, desc2, desc3, erro1, erro2);
+        } while(passou);
+        sout("Após uma intensa batalha, você, exausto, se aproxima do corpo do dragão. \n" +
+                "Ao retirar a espada que havia cravada em seu peito, a lâmina brilha intensamente, enchendo a caverna com uma luz pura. \n Surpreso, você recua e observa a luz envolver o dragão, dissolvendo suas escamas. \n" +
+                "Quando o brilho se dissipa, você vê uma mulher no lugar do dragão, e, com espanto, reconhece-a como sua mãe.\n" +
+                "Ela revela que uma maldição antiga transformava pessoas da vila em dragões, repetindo o ciclo até que a espada fosse encontrada. \n" +
+                "Com a maldição quebrada, você e sua mãe retornam à vila, onde a notícia se espalha rapidamente. O povo celebra sua vitória e você é reconhecido como o salvador da vila e de sua própria família.\n");
+        sout("\n\n\n Obrigrado por jogar \n\n\n");
+        System.exit(0);
+    }
+
 public static int comb4(int danoDec, String ataque1, String ataque2, String ataque3, String desc1, String desc2, String desc3, String erro1, String erro2) throws InterruptedException {
         Scanner input = new Scanner(System.in);
         int vida_player = 60;
@@ -546,6 +612,28 @@ public static int comb4(int danoDec, String ataque1, String ataque2, String ataq
         } while (!ataque.equals("1") && !ataque.equals("2") && !ataque.equals("3"));
         return ataque;
     }
+    // função responsavel pelos ataques dos guerreiros das sombras
+    public static int ataqueSombras(int i, int vida_player, int defesa_player) throws InterruptedException {
+        int decisao = (int) (Math.random() * 3) + 1;
+        int dado_inimigo = (int) (Math.random() * 20) + 4;
+        if (i == 10) {
+            dado_inimigo += 2;
+        }
+        switch (decisao) {
+            case 1:
+                vida_player -= golpeTrevas(defesa_player, dado_inimigo); // retorna o dano do golpe e subtrai da vida do player
+                break;
+            case 2:
+                vida_player -= golpeSombras(defesa_player, dado_inimigo);
+                break;
+            case 3:
+                vida_player -= assaltoFantasmagorico(defesa_player, dado_inimigo);
+                break;
+            default:
+                vida_player -= assaltoFantasmagorico(defesa_player, dado_inimigo);
+        }
+        return vida_player;
+    }
 public static int golpeTrevas(int dado_inimigo, int defesa_player) throws InterruptedException {
         int dano = 0;
         if (dado_inimigo >= defesa_player) {
@@ -568,6 +656,135 @@ public static int assaltoFantasmagorico(int dado_inimigo, int defesa_player) thr
         }
         return dano;
     }
+    public static boolean comb5(int vida_player, int danoDec, String ataque1, String ataque2, String ataque3, String desc1, String desc2, String desc3, String erro1, String erro2) throws InterruptedException {
+        Scanner input = new Scanner(System.in);
+        int i = 0, dado_inimigo, dano, decisao;
+        String botao;
+        int defesa_player = 18;
+        int defesa_inimigo = 15;
+        int acerto, fase = 2;
+        int vida_mordekai = 90;
+        Random random = new Random();
+        int r = -1;
+        int tre = -1;
+        sout("Com a derrota dos Guerreiros das Sombras, a névoa escura se condensa, revelando Mordekai. Envolto em um manto sombrio, seus olhos verdes brilham com malícia\n" +
+                "\"Impressionante,\" ele diz friamente. \n" +
+                "\"Mas agora enfrentará meu verdadeiro poder.\" Ele ergue a mão, intensificando a escuridão ao seu redor. \"Prepare-se, intruso, sua jornada termina aqui.");
+        do {
+            sout("SEU TURNO!\n" +
+                    "Sua vida= " + vida_player +
+                    "\nVida do boss= " + vida_mordekai + "\n");
+            botao = escolhaHabilidade(ataque1, ataque2, ataque3, r, tre, danoDec);
+            switch (botao) {
+                case "1":
+                    acerto = acerto(defesa_inimigo, fase);
+                    if (acerto == 1) {
+                        dano = ataque_1(danoDec, fase);
+                        vida_mordekai -= dano;
+                        sout(desc1);
+                        sout("tirando " + dano + " de dano\n\n");
+                    } else if (acerto == 2) {
+                        dano = ataque_1(danoDec, fase) + 2;
+                        vida_mordekai -= dano;
+                        sout(desc1);
+                        sout("Acertando um crítico que tira " + dano + " de dano\n\n");
+                    } else {
+                        sout(erro1);
+                    }
+                    break;
+                case "2":
+                    if (danoDec == 1) {
+                        sout(desc2);
+                        dano = ataque_2(danoDec, fase);
+                        vida_mordekai -= dano;
+                        sout("tirando " + dano + " de dano \n\n");
+                    } else if (danoDec == 2) {
+                        i = 10;
+                        acerto = acerto(defesa_inimigo, fase);
+                        if (acerto == 1) {
+                            dano = ataque_2(danoDec, fase);
+                            vida_mordekai -= dano;
+                            sout(desc2);
+                            sout("tirando " + dano + " de dano\n\n");
+                        } else if (acerto == 2) {
+                            dano = ataque_2(danoDec, fase) + 2;
+                            vida_mordekai -= dano;
+                            sout(desc2);
+                            sout("Acertando um crítico que tira " + dano + " de dano\n\n");
+                        } else {
+                            sout(erro2);
+                        }
+                    }
+                    r++;
+                    break;
+                case "3":
+                    sout(desc3);
+                    dano = ataque_3(danoDec, fase);
+                    vida_mordekai -= dano;
+                    sout("Tirando " + dano + " de dano\n\n");
+                    tre++;
+                    break;
+                default:
+                    sout("Escolha uma opção valida!");
+            }
+            if (vida_mordekai > 0) {
+                sout("Mordekai se prepara para atacar\n");
+                decisao = (int) (Math.random() * 6) + 1;
+                dado_inimigo = random.nextInt(20) + 12;
+                if (i == 10) {
+                    dado_inimigo += 4;
+                    i = 0;
+                }
+                switch (decisao) {
+                    case 1:
+                        vida_player -= espadaArcana(dado_inimigo, defesa_player);
+                        break;
+                    case 2:
+                        vida_player -= dardoSombrio(dado_inimigo, defesa_player);
+                        break;
+                    case 3:
+                        vida_player -= corteSombrio(dado_inimigo, defesa_player);
+                        break;
+                    case 4:
+                        vida_player -= raioArcano(dado_inimigo, defesa_player);
+                        break;
+                    case 5:
+                        vida_player -= golpeFantasmagorico(dado_inimigo, defesa_player);
+                        break;
+                    case 6:
+                        vida_player -= explosaoEnergia(dado_inimigo, defesa_player);
+                        break;
+                    default:
+                        vida_player -= explosaoEnergia(dado_inimigo, defesa_player);
+                        break;
+                }}
+
+        }while (!(vida_player <= 0) && !(vida_mordekai <= 0));
+
+        if (vida_player<=0){
+            sout("Com um último suspiro, você tomba no chão, suas feridas fatais cobrando seu preço. Seus olhos se fecham lentamente, e o silêncio da solidão envolve seu último momento.\n");
+            do {
+                sout("Deseja tentar novamente?" +
+                        "\n1- Sim" +
+                        "\n2- Não\n");
+                botao = input.next();
+                if(!botao.equals("1") && !botao.equals("2") && !botao.equals("3")) {
+                    sout("Selecione uma opção valida!\n");
+                }
+            }while (!botao.equals("1") && !botao.equals("2"));
+            switch (botao) {
+                case "1":
+                    return true;
+                case "2":
+                    sout("\nObrigado por jogar");
+                    System.exit(0);
+            }
+        } else {
+            sout("Mordekai, enfraquecido, tenta conjurar uma última ilusão, mas falha. Sua espada cai, e ele tomba de joelhos antes de cair, imóvel. A escuridão se dissipa, e o pântano recupera sua paz.\n\n");
+            return false;
+        }
+        return true;
+    }
 public static int espadaArcana(int dado_inimigo, int defesa_player) throws InterruptedException {
         int dano = 0;
         if (dado_inimigo >= defesa_player) {
@@ -579,6 +796,7 @@ public static int espadaArcana(int dado_inimigo, int defesa_player) throws Inter
         }
         return dano;
     }
+
 public static int dardoSombrio(int dado_inimigo, int defesa_player) throws InterruptedException {
         int dano = 0;
         if (dado_inimigo >= defesa_player) {
@@ -587,6 +805,17 @@ public static int dardoSombrio(int dado_inimigo, int defesa_player) throws Inter
             sout("Tirando " + dano + " de dano\n\n");
         } else {
             sout("Mordekai conjura um dardo de sombras e o lança em sua direção, mas você se abaixa rapidamente, e o dardo passa assobiando acima de sua cabeça.\n\n");
+        }
+        return dano;
+    }
+    public static int raioArcano(int dado_inimigo, int defesa_player) throws InterruptedException {
+        int dano = 0;
+        if (dado_inimigo >= defesa_player) {
+            sout("Mordekai dispara um raio de energia arcana diretamente de sua mão. O feixe de luz atinge você, causando uma dor intensa e deixando uma marca de queimadura onde o raio o atingiu.\n");
+            dano = (int) ((Math.random() * 8) + 1) + (int) ((Math.random() * 8) + 1);
+            sout("Tirando " + dano + " de dano\n\n");
+        } else {
+            sout("Mordekai dispara um raio de energia arcana diretamente de sua mão, mas você se move rapidamente para fora do caminho, e o raio atinge uma árvore atrás de você.\n\n");
         }
         return dano;
     }
@@ -612,6 +841,18 @@ public static int explosaoEnergia(int dado_inimigo, int defesa_player) throws In
         }
         return dano;
     }
+    public static int sobroInfernal(int dado_inimigo, int defesa_player) throws InterruptedException {
+        int dano = 0;
+        sout("Astaroth ergue sua cabeça imponente, suas escamas brilhando com um calor intenso. De suas mandíbulas entreabertas, você vê as chamas começando a se formar, prontas para serem liberadas em uma torrente devastadora.\n");
+        if (dado_inimigo >= defesa_player) {
+            sout("Astaroth abre suas mandíbulas, liberando uma torrente de fogo infernal. As chamas consomem tudo em seu caminho, queimando carne e derretendo metal.\n");
+            dano = (int) ((Math.random() * 6) + 1) + (int) ((Math.random() * 6) + 1) +(int) ((Math.random() * 6) + 1) +(int) ((Math.random() * 6) + 1) +(int) ((Math.random() * 6) + 1) ;
+            sout("Tirando " + dano + " de dano\n\n");
+        } else {
+            sout("Você consegue se jogar para o lado, evitando o pior do fogo infernal. Apesar de sentir o calor intenso, você escapa das chamas.\n\n");
+        }
+        return dano;
+    }
 public static int garrasCortantes(int dado_inimigo, int defesa_player) throws InterruptedException {
         int dano = 0;
         sout("Astaroth levanta uma de suas garras maciças, afiadas como lâminas, e as lança em sua direção com uma precisão mortal.\n");
@@ -633,6 +874,18 @@ public static int mordidaDevastadora(int dado_inimigo, int defesa_player) throws
             sout("Tirando " + dano + " de dano\n\n");
         } else {
             sout("Você se afasta rapidamente, e as mandíbulas de Astaroth se fecham onde você estava, o fogo lambendo o ar em vão.\n\n");
+        }
+        return dano;
+    }
+    public static int chamas(int dado_inimigo, int defesa_player) throws InterruptedException {
+        int dano = 0;
+        sout("Com um gesto maligno, Astaroth conjura chamas negras que dançam ao redor de suas garras antes de lançá-las em sua direção.\n");
+        if (dado_inimigo >= defesa_player) {
+            sout("Astaroth conjura chamas negras que o envolvem, drenando sua vida com um frio que parece vir do próprio abismo\n");
+            dano = (int) ((Math.random() * 6) + 1) + (int) ((Math.random() * 6) + 1) + (int) ((Math.random() * 6) + 1)+ (int) ((Math.random() * 6) + 1)+ (int) ((Math.random() * 6) + 1)+ (int) ((Math.random() * 6) + 1);
+            sout("Tirando " + dano + " de dano\n\n");
+        } else {
+            sout("Você se afasta das chamas negras a tempo, sentindo apenas um toque gélido enquanto elas passam.\n\n");
         }
         return dano;
     }
@@ -664,53 +917,45 @@ public static int chuvaLava(int dado_inimigo, int defesa_player) throws Interrup
 
 
 
-    
-//Desafios Floresta.
-  public static boolean desafio1(Scanner input) throws InterruptedException {
 
-    sout("\n                GROM: Para provar que eis digno, terá que resolver os seguintes desafios de lógica: :             ");
-    sout("\nEm um programa que o usuário insere dois números e então exiba a soma desses números. Qual seria a resposta correta: ");
-    sout("\n**************************************************************************************");
-    sout("\n                      Alternativas                             ");
-    sout("\n1- Para imprimir a soma o usuário precisará colocar o comando 'System.out.println(variavel da soma );'.");
-    sout("\n2- Para imprimir a soma o usuário precisará colocar o comando 'System.out.println(variavel do primeiro número);");
-    sout("\n**************************************************************************************");
-    sout("\nDigite a alternativa desejada. Caso queira que repita o enunciado do desafio, digite (3)");
+    //Função respponsável pelo primeiro desafio(Primeiro desafio da Floresta).
+    public static boolean desafio1(Scanner input) throws InterruptedException {
 
-    int escolha = 0;
+        sout("\n                GROM: Para provar que eis digno, terá que resolver os seguintes desafios de lógica: :             ");
+        sout("\nEm um programa que o usuário insere dois números e então exiba a soma desses números. Qual seria a resposta correta: ");
+        sout("\n******************************");
+        sout("\n                      Alternativas                             ");
+        sout("\n1- Para imprimir a soma o usuário precisará colocar o comando 'System.out.println(variavel da soma );'.");
+        sout("\n2- Para imprimir a soma o usuário precisará colocar o comando 'System.out.println(variavel do primeiro número);");
+        sout("\n******************************");
+        sout("\nDigite a alternativa desejada. Caso queira que repita o enunciado do desafio, digite (3)");
 
-    while (true) {
-      escolha = input.nextInt();
-      switch (escolha) {
-        case 1:
-          sout("\nParabéns, você acertou e pode seguir para o próximo desafio!! ");
-          return true;
-        case 2:
-          sout("\nDe onde vens com tanta ignorância?! Resposta Incorreta");
-          sout("\nRetornando...");
-          sout("\nEm um programa (JAVA) que o usuário insere dois números e então exiba a soma desses números. Qual seria a resposta correta: ");
-          sout("\n**************************************************************************************");
-          sout("\n                      Alternativas                             ");
-          sout("\n1- Para imprimir a soma o usuário precisará colocar o comando 'System.out.println(variavel da soma );'.");
-          sout("\n2- Para imprimir a soma o usuário precisará colocar o comando 'System.out.println(variavel do primeiro número);");
-          sout("\n**************************************************************************************");
-          sout("\nDigite a alternativa desejada. Caso queira que repita o enunciado do desafio, digite (3)");
-          break;
-        case 3:
-          sout("\nEm um programa (JAVA) que o usuário insere dois números e então exiba a soma desses números. Qual seria a resposta correta: ");
-          sout("\n**************************************************************************************");
-          sout("\n                      Alternativas                             ");
-          sout("\n1- Para imprimir a soma o usuário precisará colocar o comando 'System.out.println(variavel da soma );'.");
-          sout("\n2- Para imprimir a soma o usuário precisará colocar o comando 'System.out.println(variavel do primeiro número);");
-          sout("\n**************************************************************************************");
-          sout("\nDigite a alternativa desejada. Caso queira que repita o enunciado do desafio, digite (3)");
-          break;
-        default:
-          sout("\nResposta Inválida, tente novamente");
-          break;
-      }
+        String escolha = "0";
+
+        while (true) {
+            escolha = input.next();
+            switch (escolha) {
+                case "1":
+                    sout("\nParabéns, você acertou e pode seguir para o próximo desafio!! ");
+                    return true;
+                case "2":
+                    sout("\nDe onde vens com tanta ignorância?! Resposta Incorreta");
+                    break;
+                case "3":
+                    sout("\nEm um programa (JAVA) que o usuário insere dois números e então exiba a soma desses números. Qual seria a resposta correta: ");
+                    sout("\n******************************");
+                    sout("\n                      Alternativas                             ");
+                    sout("\n1- Para imprimir a soma o usuário precisará colocar o comando 'System.out.println(variavel da soma );'.");
+                    sout("\n2- Para imprimir a soma o usuário precisará colocar o comando 'System.out.println(variavel do primeiro número);");
+                    sout("\n******************************");
+                    sout("\nDigite a alternativa desejada. Caso queira que repita o enunciado do desafio, digite (3)");
+                    break;
+                default:
+                    sout("\nResposta Inválida, tente novamente");
+                    break;
+            }
+        }
     }
-  }
 
   //Função respponsável pelo segundo desafio(Segundo desafio da Floresta).
 public static boolean desafio2(Scanner input) throws InterruptedException {
@@ -840,46 +1085,46 @@ public static boolean desafio2(Scanner input) throws InterruptedException {
     }
 
   }
-  public static boolean desafio5(Scanner input) throws InterruptedException {
+    //Função respponsável pelo quinto desafio(Terceiro desafio do pântano).
+    public static boolean desafio5(Scanner input) throws InterruptedException {
 
-    sout("\n                                           Quinto Desafio:");
-    sout("\nEm um programa (JAVA) para que serve as  seguintes variáveis: Boolean, int e String ");
-    sout("\n**************************************************************************************");
-    sout("\n                                            Alternativas:");
-    sout("\n1- Armazenar sequências de caracteres, Armazenar valores com ponto flutuante(1.01, 1.02, 1.03)..., Aramazenar valores('true', 'false')");
-    sout("\n2- Aramazenar valores('true', 'false'), Armazenar valores inteiros('0,1,2,3...), Armazenar sequências de caracteres.");
-    sout("\n**************************************************************************************");
-    sout("\nSe você deseja ir para o caminho da direita digite (1). Caso contrário digite (2). Caso queira que repita o enunciado do desafio, digite (3)");
+        sout("\n                                           Quinto Desafio:");
+        sout("\nEm um programa (JAVA) para que serve as  seguintes variáveis: Boolean, int e String ");
+        sout("\n******************************");
+        sout("\n                                            Alternativas:");
+        sout("\n1- Armazenar sequências de caracteres, Armazenar valores com ponto flutuante(1.01, 1.02, 1.03)..., Aramazenar valores('true', 'false')");
+        sout("\n2- Aramazenar valores('true', 'false'), Armazenar valores inteiros('0,1,2,3...), Armazenar sequências de caracteres.");
+        sout("\n******************************");
+        sout("\nSe você deseja ir para o caminho da direita digite (1). Caso contrário digite (2). Caso queira que repita o enunciado do desafio, digite (3)");
 
-    int escolha = 0;
+        String escolha = "0";
 
-    while (true) {
-      escolha = input.nextInt();
-      switch (escolha) {
-        case 1:
-          sout("\nResposta errada, retornando...");
-          desafio3(input);
-          return false;
-        case 2:
-          sout("\nParabéns, você acertou e completou todos os desafios!!");
-          return true;
-        case 3:
-          sout("\n                                           Quinto Desafio:");
-          sout("\nEm um programa (JAVA) para que serve as  seguintes variáveis: Boolean, int e String ");
-          sout("\n**************************************************************************************");
-          sout("\n                                            Alternativas:");
-          sout("\n1- Armazenar sequências de caracteres, Armazenar valores com ponto flutuante(1.01, 1.02, 1.03)..., Aramazenar valores('true', 'false')");
-          sout("\n2- Aramazenar valores('true', 'false'), Armazenar valores inteiros('0,1,2,3...), Armazenar sequências de caracteres.");
-          sout("\n**************************************************************************************");
-          sout("\nSe você deseja ir para o caminho da direita digite (1). Caso contrário digite (2). Caso queira que repita o enunciado do desafio, digite (3)");
+        while (true) {
+            escolha = input.next();
+            switch (escolha) {
+                case "1":
+                    sout("\nResposta errada, retornando ao Desafio 1...");
+                    return false;
+                case "2":
+                    sout("\nParabéns, você acertou e completou todos os desafios!!");
+                    return true;
+                case "3":
+                    sout("\n                                           Quinto Desafio:");
+                    sout("\nEm um programa (JAVA) para que serve as  seguintes variáveis: Boolean, int e String ");
+                    sout("\n******************************");
+                    sout("\n                                            Alternativas:");
+                    sout("\n1- Armazenar sequências de caracteres, Armazenar valores com ponto flutuante(1.01, 1.02, 1.03)..., Aramazenar valores('true', 'false')");
+                    sout("\n2- Aramazenar valores('true', 'false'), Armazenar valores inteiros('0,1,2,3...), Armazenar sequências de caracteres.");
+                    sout("\n******************************");
+                    sout("\nSe você deseja ir para o caminho da direita digite (1). Caso contrário digite (2). Caso queira que repita o enunciado do desafio, digite (3)");
 
-          break;
-        default:
-          sout("\nResposta Inválida, tente novamente");
-          break;
-      }
+                    break;
+                default:
+                    sout("\nResposta Inválida, tente novamente");
+                    break;
+            }
+        }
     }
-  }
 
   public static void iniciarDesafios() throws InterruptedException {
     Scanner input = new Scanner(System.in);
